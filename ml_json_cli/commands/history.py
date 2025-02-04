@@ -15,13 +15,11 @@ def history(job_id):
         "SELECT version, timestamp FROM job_versions WHERE job_id = ? ORDER BY timestamp DESC",
         (job_id,),
     )
-    versions = cursor.fetchall()
-
-    if not versions:
-        click.echo(f"No history found for job: {job_id}")
-    else:
+    if versions := cursor.fetchall():
         click.echo(f"History for Job: {job_id}")
         for row in versions:
             click.echo(f"Version {row['version']} - {row['timestamp']}")
 
+    else:
+        click.echo(f"No history found for job: {job_id}")
     conn.close()

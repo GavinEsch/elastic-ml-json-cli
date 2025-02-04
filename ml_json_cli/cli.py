@@ -55,7 +55,7 @@ def completer(text, state):
 
 def setup_readline():
     """Enables history and tab completion in the interactive shell."""
-    if sys.platform == "darwin" or sys.platform == "linux":
+    if sys.platform in ["darwin", "linux"]:
         readline.parse_and_bind("tab: complete")
         readline.set_completer(completer)
         readline.set_history_length(1000)

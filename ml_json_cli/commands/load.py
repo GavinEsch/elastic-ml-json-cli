@@ -55,9 +55,7 @@ def load(file_path):
                 custom_settings = "{}"
 
             cursor.execute("SELECT * FROM jobs WHERE job_id = ?", (job_id,))
-            existing_job = cursor.fetchone()
-
-            if existing_job:
+            if cursor.fetchone():
                 cursor.execute(
                     """
                     INSERT INTO job_versions (job_id, version, description, groups, analysis_config,
