@@ -22,6 +22,7 @@ def init_db():
             description TEXT,
             groups TEXT,
             analysis_config TEXT,
+            analysis_limits TEXT,
             datafeed_config TEXT,
             custom_settings TEXT,
             last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP

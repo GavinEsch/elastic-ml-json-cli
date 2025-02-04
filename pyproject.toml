@@ -1,0 +1,2 @@
+[tool.poetry.scripts]
+mlcli = "ml_json_cli.cli:cli"

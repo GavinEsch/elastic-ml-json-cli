@@ -30,8 +30,8 @@ def load(file_path):
             description = job["job"].get("description", "")
             groups = ", ".join(job["job"].get("groups", []))
             analysis_config = json.dumps(job["job"].get("analysis_config", {}))
+            analysis_limits = json.dumps(job["job"].get("analysis_limits", {}))
 
-            # Ensure `datafeed_config` is valid JSON
             try:
                 datafeed_config = json.dumps(
                     job.get("datafeed", {}), ensure_ascii=False
@@ -42,7 +42,6 @@ def load(file_path):
                 )
                 datafeed_config = "{}"
 
-            # Ensure `custom_settings` is valid JSON
             try:
                 custom_settings = json.dumps(
                     job["job"].get("custom_settings", {}), ensure_ascii=False
@@ -55,12 +54,13 @@ def load(file_path):
 
             cursor.execute(
                 """
-                INSERT INTO jobs (job_id, description, groups, analysis_config, datafeed_config, custom_settings)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO jobs (job_id, description, groups, analysis_config, analysis_limits, datafeed_config, custom_settings)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(job_id) DO UPDATE SET
                 description=excluded.description,
                 groups=excluded.groups,
                 analysis_config=excluded.analysis_config,
+                analysis_limits=excluded.analysis_limits,
                 datafeed_config=excluded.datafeed_config,
                 custom_settings=excluded.custom_settings,
                 last_updated=CURRENT_TIMESTAMP
@@ -70,12 +70,13 @@ def load(file_path):
                     description,
                     groups,
                     analysis_config,
+                    analysis_limits,
                     datafeed_config,
                     custom_settings,
                 ),
             )
 
-            conn.commit()  # Explicit commit after each insert/update
+            conn.commit()
 
         except KeyError as e:
             console.print(
