@@ -1,10 +1,12 @@
-import click
+"""@DOCSTRING"""
+
 import json
-from ml_json_cli.db import get_db_connection
+import click
 from deepdiff import DeepDiff
 from rich.console import Console
 from rich.table import Table
 from rich import box
+from ml_json_cli.db import get_db_connection
 
 console = Console()
 

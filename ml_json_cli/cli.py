@@ -20,7 +20,6 @@ console = Console()
 @click.group()
 def cli():
     """Elastic ML CLI - Manage and Compare ML Jobs"""
-    pass
 
 
 cli.add_command(load)

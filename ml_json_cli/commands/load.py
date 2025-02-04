@@ -1,7 +1,9 @@
-import click
+"""@DOCSTRING"""
+
 import json
-from ml_json_cli.db import get_db_connection
+import click
 from rich.console import Console
+from ml_json_cli.db import get_db_connection
 
 console = Console()
 
@@ -14,7 +16,7 @@ def load(file_path):
     cursor = conn.cursor()
 
     try:
-        with open(file_path, "r") as f:
+        with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
     except json.JSONDecodeError:
         console.print(

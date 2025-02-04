@@ -1,3 +1,5 @@
+"""@DOCSTRING"""
+
 import click
 from ml_json_cli.db import get_db_connection
 
@@ -33,21 +35,30 @@ def merge(strategy):
 
         if strategy == "latest":
             merged_data = versions[0]["data"]
+            database_merge(cursor, merged_data, job_id)
         elif strategy == "earliest":
             merged_data = versions[-1]["data"]
+            database_merge(cursor, merged_data, job_id)
         elif strategy == "most_common":
             data_counts = {}
             for version in versions:
                 data_counts[version["data"]] = data_counts.get(version["data"], 0) + 1
             merged_data = max(data_counts, key=data_counts.get)
-
-        cursor.execute(
-            """
-            UPDATE jobs SET analysis_config = ?, last_updated = CURRENT_TIMESTAMP WHERE job_id = ?
-        """,
-            (merged_data, job_id),
-        )
-
+            database_merge(cursor, merged_data, job_id)
     conn.commit()
     conn.close()
     click.echo(f"Merged {len(jobs_to_merge)} jobs using strategy: {strategy}")
+
+
+def database_merge(cursor, merged_data, job_id):
+    """Merge job data into the database.
+
+    This function updates the `jobs` table with the merged data and
+    updates the last_updated timestamp.
+    """
+    cursor.execute(
+        """
+            UPDATE jobs SET analysis_config = ?, last_updated = CURRENT_TIMESTAMP WHERE job_id = ?
+        """,
+        (merged_data, job_id),
+    )

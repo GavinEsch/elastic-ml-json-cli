@@ -1,11 +1,17 @@
-import click
+"""@DOCSTRING
+- ML CLI Parser for Elastic
+"""
+
 import json
 import sqlite3
 from datetime import datetime
+
+import click
 from fuzzywuzzy import fuzz
-from ml_json_cli.db import get_db_connection
-from rich.table import Table
 from rich.console import Console
+from rich.table import Table
+
+from ml_json_cli.db import get_db_connection
 
 console = Console()
 
@@ -37,17 +43,14 @@ def search(
     job_id,
     fuzzy,
     group,
-    bucket_span,
-    influencers,
-    created_by,
-    model_memory_limit,
     detector_function,
     start_date,
     end_date,
     page,
     limit,
 ):
-    """Search ML jobs in the database with enhanced filtering, fuzzy search, and pagination."""
+    """Search ML jobs in the database with enhanced filtering,
+    fuzzy search, and pagination."""
     conn = get_db_connection()
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
