@@ -1,0 +1,51 @@
+# 🏗 General Python Ignore Rules
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+
+# 🚀 Virtual Environments
+venv/
+.env/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 🛠 Build and Distribution
+build/
+dist/
+*.egg-info/
+*.manifest
+*.spec
+
+# ⚙️ SQLite Database Files
+ml_jobs.db
+*.sqlite3
+
+# 🧪 Pytest & Test Artifacts
+htmlcov/
+.coverage
+.tox/
+nosetests.xml
+pytest_cache/
+cache/
+*.log
+
+# 📝 Editor & OS Files
+.DS_Store
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# 🔒 Security & Credentials
+.env
+*.secrets
+config.json
+secrets.json
+
+# ⚡ GitHub & CI/CD
+.gitlab-ci.yml
+.github/
