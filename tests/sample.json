@@ -4,7 +4,7 @@
         "custom_settings": {
             "job_revision": 4,
             "security_app_display_name": "Anomalous Windows Process Creation",
-            "created_by": "ml-module-security-windows-v3"
+            "created_by": "ml-module-security-windows-v4"
         },
         "groups": [
             "security",
@@ -12,7 +12,7 @@
         ],
         "description": "Security: Windows - Looks for unusual process relationships which may indicate execution of malware or persistence mechanisms.",
         "analysis_config": {
-            "bucket_span": "15m",
+            "bucket_span": "12m",
             "detectors": [
                 {
                     "detector_description": "Detects rare processes per parent process.",

@@ -12,7 +12,7 @@
         ],
         "description": "Security: Windows - Looks for unusual process relationships which may indicate execution of malware or persistence mechanisms.",
         "analysis_config": {
-            "bucket_span": "15m",
+            "bucket_span": "12m",
             "detectors": [
                 {
                     "detector_description": "Detects rare processes per parent process.",
@@ -30,7 +30,7 @@
             "model_prune_window": "30d"
         },
         "analysis_limits": {
-            "model_memory_limit": "12mb",
+            "model_memory_limit": "15mb",
             "categorization_examples_limit": 4
         },
         "data_description": {

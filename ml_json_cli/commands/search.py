@@ -92,9 +92,7 @@ def search(
             return
 
     query += " ORDER BY last_updated DESC LIMIT ? OFFSET ?"
-    params.append(limit)
-    params.append((page - 1) * limit)
-
+    params.extend((limit, (page - 1) * limit))
     cursor.execute(query, tuple(params))
     jobs = cursor.fetchall()
 
@@ -119,7 +117,6 @@ def search(
     for job in jobs:
         bucket_span_value = "-"
         influencers_value = "-"
-        model_memory_value = "-"
         detector_function_value = "-"
         created_by_value = "-"
 
@@ -161,7 +158,6 @@ def search(
         if detector_function and detector_function_value != detector_function:
             continue
 
-        # Apply fuzzy search if provided
         if fuzzy and fuzz.partial_ratio(fuzzy.lower(), job["job_id"].lower()) < 80:
             continue
 

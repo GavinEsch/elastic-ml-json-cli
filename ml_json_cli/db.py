@@ -6,7 +6,7 @@ DB_FILE = "ml_jobs.db"
 
 def get_db_connection():
     conn = sqlite3.connect(DB_FILE)
-    conn.row_factory = sqlite3.Row  # Enables column access by name
+    conn.row_factory = sqlite3.Row
     return conn
 
 
@@ -14,7 +14,6 @@ def init_db():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # Main jobs table
     cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS jobs (
@@ -30,19 +29,35 @@ def init_db():
     """
     )
 
-    # Job versions table for tracking changes
     cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS job_versions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             job_id TEXT,
             version INTEGER,
-            data TEXT,
+            description TEXT,
+            groups TEXT,
+            analysis_config TEXT,
+            analysis_limits TEXT,
+            datafeed_config TEXT,
             custom_settings TEXT,
             timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (job_id) REFERENCES jobs (job_id)
         )
     """
+    )
+
+    cursor.execute(
+        """
+        CREATE TRIGGER IF NOT EXISTS increment_version
+        AFTER INSERT ON job_versions
+        FOR EACH ROW
+        WHEN (SELECT COUNT(*) FROM job_versions WHERE job_id = NEW.job_id) > 0
+        BEGIN
+            UPDATE job_versions SET version = (SELECT MAX(version) + 1 FROM job_versions WHERE job_id = NEW.job_id)
+            WHERE id = NEW.id;
+        END;
+        """
     )
 
     conn.commit()

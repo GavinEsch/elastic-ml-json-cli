@@ -29,7 +29,7 @@ jaraco.functools==4.1.0
 keyring==25.6.0
 markdown-it-py==3.0.0
 mdurl==0.1.2
--e git+https://github.com/GavinEsch/elastic-ml-json-cli.git@fef30f680be19bb0850b88165342e9d3ad93e08e#egg=ml_json_cli
+-e git+https://github.com/GavinEsch/elastic-ml-json-cli.git@e947688f201e1f6bb99687b3d9368ac3f9a5eb77#egg=ml_json_cli
 more-itertools==10.6.0
 msgpack==1.1.0
 nodeenv==1.9.1

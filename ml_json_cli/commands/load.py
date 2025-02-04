@@ -52,10 +52,26 @@ def load(file_path):
                 )
                 custom_settings = "{}"
 
+            cursor.execute("SELECT * FROM jobs WHERE job_id = ?", (job_id,))
+            existing_job = cursor.fetchone()
+
+            if existing_job:
+                cursor.execute(
+                    """
+                    INSERT INTO job_versions (job_id, version, description, groups, analysis_config,
+                                              analysis_limits, datafeed_config, custom_settings, timestamp)
+                    SELECT job_id, (SELECT IFNULL(MAX(version), 0) + 1 FROM job_versions WHERE job_id = ?),
+                           description, groups, analysis_config, analysis_limits,
+                           datafeed_config, custom_settings, last_updated
+                    FROM jobs WHERE job_id = ?
+                    """,
+                    (job_id, job_id),
+                )
+
             cursor.execute(
                 """
-                INSERT INTO jobs (job_id, description, groups, analysis_config, analysis_limits, datafeed_config, custom_settings)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO jobs (job_id, description, groups, analysis_config, analysis_limits, datafeed_config, custom_settings, last_updated)
+                VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
                 ON CONFLICT(job_id) DO UPDATE SET
                 description=excluded.description,
                 groups=excluded.groups,

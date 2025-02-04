@@ -36,7 +36,6 @@ def merge(strategy):
         elif strategy == "earliest":
             merged_data = versions[-1]["data"]
         elif strategy == "most_common":
-            # Count occurrences of each version and use the most frequent one
             data_counts = {}
             for version in versions:
                 data_counts[version["data"]] = data_counts.get(version["data"], 0) + 1
