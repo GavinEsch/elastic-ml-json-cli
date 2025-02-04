@@ -1,5 +1,4 @@
 import click
-import sqlite3
 from ml_json_cli.db import get_db_connection
 from rich.console import Console
 

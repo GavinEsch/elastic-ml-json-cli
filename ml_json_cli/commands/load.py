@@ -38,7 +38,8 @@ def load(file_path):
                 )
             except (TypeError, ValueError):
                 console.print(
-                    f"[red]Error: Unable to convert datafeed_config for job {job_id}. Storing empty JSON.[/red]"
+                    f"[red]Error: Unable to convert datafeed_config for job {job_id}. "
+                    f"Storing empty JSON.[/red]"
                 )
                 datafeed_config = "{}"
 
@@ -48,7 +49,8 @@ def load(file_path):
                 )
             except (TypeError, ValueError):
                 console.print(
-                    f"[red]Warning: Invalid custom_settings format for job {job_id}. Storing empty JSON.[/red]"
+                    f"[red]Warning: Invalid custom_settings format for job {job_id}."
+                    f"Storing empty JSON.[/red]"
                 )
                 custom_settings = "{}"
 
@@ -73,13 +75,11 @@ def load(file_path):
                 INSERT INTO jobs (job_id, description, groups, analysis_config, analysis_limits, datafeed_config, custom_settings, last_updated)
                 VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
                 ON CONFLICT(job_id) DO UPDATE SET
-                description=excluded.description,
-                groups=excluded.groups,
-                analysis_config=excluded.analysis_config,
-                analysis_limits=excluded.analysis_limits,
-                datafeed_config=excluded.datafeed_config,
-                custom_settings=excluded.custom_settings,
-                last_updated=CURRENT_TIMESTAMP
+                description = CASE
+                    WHEN excluded.description != jobs.description THEN excluded.description
+                    ELSE jobs.description
+                END,
+                last_updated = CURRENT_TIMESTAMP
             """,
                 (
                     job_id,

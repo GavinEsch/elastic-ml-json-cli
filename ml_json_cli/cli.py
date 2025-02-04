@@ -1,8 +1,9 @@
-import click
 import sys
 import shlex
 import readline
 import argcomplete
+import click
+from rich.console import Console
 from ml_json_cli.commands.load import load
 from ml_json_cli.commands.search import search
 from ml_json_cli.commands.compare import compare
@@ -11,7 +12,7 @@ from ml_json_cli.commands.history import history
 from ml_json_cli.commands.merge import merge
 from ml_json_cli.commands.undo import undo
 from ml_json_cli.db import get_db_connection
-from rich.console import Console
+
 
 console = Console()
 

@@ -1,4 +1,5 @@
 argcomplete==3.5.3
+astroid==3.3.8
 backports.tarfile==1.2.0
 build==1.2.2.post1
 cachecontrol==0.14.2
@@ -11,6 +12,7 @@ click==8.1.8
 colorama==0.4.6
 crashtest==0.4.1
 deepdiff==8.1.1
+dill==0.3.9
 distlib==0.3.9
 dulwich==0.22.7
 exceptiongroup==1.2.2
@@ -23,11 +25,13 @@ ijson==3.3.0
 importlib-metadata==8.6.1
 iniconfig==2.0.0
 installer==0.7.0
+isort==6.0.0
 jaraco.classes==3.4.0
 jaraco.context==6.0.1
 jaraco.functools==4.1.0
 keyring==25.6.0
 markdown-it-py==3.0.0
+mccabe==0.7.0
 mdurl==0.1.2
 -e git+https://github.com/GavinEsch/elastic-ml-json-cli.git@e947688f201e1f6bb99687b3d9368ac3f9a5eb77#egg=ml_json_cli
 more-itertools==10.6.0
@@ -43,6 +47,7 @@ poetry-core==2.0.1
 pre-commit==4.1.0
 pycparser==2.22
 pygments==2.19.1
+pylint==3.3.4
 pyproject-hooks==1.2.0
 pytest==8.3.4
 pytest-mock==3.14.0
