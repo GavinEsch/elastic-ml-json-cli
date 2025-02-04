@@ -10,25 +10,27 @@ console = Console()
 @click.pass_context
 def cli(ctx):
     """Elastic ML JSON CLI - A tool for searching, analyzing, and tracking changes in exported ML jobs."""
-    if ctx.invoked_subcommand is None:
-        console.print(
-            "[bold cyan]ML JSON CLI Interactive Mode. Type 'help' for commands or 'exit' to quit.[/bold cyan]\n"
-        )
-        while True:
-            try:
-                command = input("mlcli> ").strip()
-                if command.lower() in ["exit", "quit"]:
-                    console.print("[bold yellow]Exiting CLI...[/bold yellow]")
-                    break
-                if command.lower() == "help":
-                    cli.main(["--help"])
-                elif command:
-                    cli.main(prog_name="mlcli", args=command.split())
-            except KeyboardInterrupt:
-                console.print(
-                    "\n[bold red]Keyboard Interrupt detected. Exiting CLI...[/bold red]"
-                )
+    if ctx.invoked_subcommand is not None:
+        return
+    console.print(
+        "[bold cyan]ML JSON CLI Interactive Mode. Type 'help' for commands or 'exit' to quit.[/bold cyan]\n"
+    )
+    while True:
+        try:
+            command = input("mlcli> ").strip()
+            lower_command = command.lower()
+            if lower_command in ["exit", "quit"]:
+                console.print("[bold yellow]Exiting CLI...[/bold yellow]")
                 break
+            if lower_command == "help":
+                cli.main(["--help"])
+            elif command:
+                cli.main(prog_name="mlcli", args=command.split())
+        except KeyboardInterrupt:
+            console.print(
+                "\n[bold red]Keyboard Interrupt detected. Exiting CLI...[/bold red]"
+            )
+            break
 
 
 cli.add_command(load.load)
